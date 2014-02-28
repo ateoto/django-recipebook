@@ -43,7 +43,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'words.tests.urls'
+ROOT_URLCONF = 'recipebook.tests.urls'
 
 DATABASES = {
     'default': {
