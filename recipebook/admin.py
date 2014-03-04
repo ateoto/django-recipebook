@@ -14,11 +14,12 @@ class IngredientLineInline(admin.TabularInline):
         return super(IngredientLineInline, self).get_formset(request, obj, **kwargs)
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        parent_ct = ContentType.objects.get_for_model(self.parent_obj.__class__)
-        recipe_ct = ContentType.objects.get_for_model(Recipe)
-        if parent_ct == recipe_ct:
-            if db_field.name == 'ingredient':
-                kwargs['queryset'] = RecipeIngredient.objects.all().exclude(content_type=recipe_ct, object_id=self.parent_obj.id)
+        if self.parent_obj:
+            parent_ct = ContentType.objects.get_for_model(self.parent_obj.__class__)
+            recipe_ct = ContentType.objects.get_for_model(Recipe)
+            if parent_ct == recipe_ct:
+                if db_field.name == 'ingredient':
+                    kwargs['queryset'] = RecipeIngredient.objects.all().exclude(content_type=recipe_ct, object_id=self.parent_obj.id)
         return super(IngredientLineInline, self).formfield_for_foreignkey(db_field, request, **kwargs)
 
 
